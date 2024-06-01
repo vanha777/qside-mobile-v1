@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 interface SocialUser {
-    type?: string;
-    image?: string;
-    title?: string;
-    url?: string;
-    description?: string;
-    icon?: string;
+    type: string;
+    image: string;
+    title: string;
+    url: string;
+    description: string;
+    icon: string;
 }
 
 interface SliderItemProps {
