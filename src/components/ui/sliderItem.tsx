@@ -159,8 +159,6 @@ const SliderItem: React.FC<SliderItemProps> = ({ socialUser, fetchSocial }) => {
 
             <div className="card w-96 glass">
 
-
-
                 <figure className='px-3 pt-3'>
                     <div className="card w-96 shadow-xl p-2 indicator">
 
@@ -243,7 +241,7 @@ const SliderItem: React.FC<SliderItemProps> = ({ socialUser, fetchSocial }) => {
                     </div>
 
                     {socialUser.description !== "" ? (
-                        <textarea className="flex textarea" placeholder={socialUser.description}></textarea>
+                        <textarea className="dark flex textarea" placeholder={socialUser.description}></textarea>
 
                     ) : (
                         <div className="flex flex-col gap-4">
