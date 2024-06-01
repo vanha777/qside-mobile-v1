@@ -200,7 +200,7 @@ const SliderItem: React.FC<SliderItemProps> = ({ socialUser, fetchSocial }) => {
                                         <img className="" src="qside-logo-trans.png" alt="car!" style={{ width: '100px', height: '25px' }} />
                                     </span> */}
 
-                                <img className=" card w-full" src="http://localhost:3000/opengraph-image.png" alt="car!" />
+                                <img className=" card w-full" src="opengraph-image.png" alt="car!" />
                                 {/* <img className=" card w-full" src="qside-logo.png" alt="car!" /> */}
 
 
