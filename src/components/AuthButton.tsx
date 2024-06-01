@@ -1,22 +1,17 @@
-import { createClient } from "@/utils/supabase/server";
+
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { useState } from "react";
+
+interface User {
+  email: string;
+}
 
 export default async function AuthButton() {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const signOut = async () => {
-    "use server";
-
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    return redirect("/login");
-  };
-
+  const signOut = () => {
+    console.log("signing-out");
+  }
+  const [user, setUser] = useState<User | null>(null);
   return user ? (
     <div className="flex items-center gap-4">
       Hey, {user.email}!
