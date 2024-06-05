@@ -25,6 +25,6 @@ tauri = { version = "2.0.0-beta.19", features = [] }
 reqwest = { version = "0.12.3", features = ["json", "gzip"] }
 scraper = "0.19.0"
 tauri-plugin-nfc = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
-
+# tauri-plugin-nfc = { path = "../../plugins-workspace/plugins/nfc" }
 [patch.crates-io]
 security-framework = { git = "https://github.com/kornelski/rust-security-framework.git", branch = "main" }
