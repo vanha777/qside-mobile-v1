@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { scan, textRecord, uriRecord, write } from "@tauri-apps/plugin-nfc";
+import { scan, textRecord, uriRecord, write, WriteOptions, ScanKind } from "@tauri-apps/plugin-nfc";
 interface SocialUser {
     type: string;
     image: string;
@@ -38,12 +38,14 @@ const getBaseUrl = (url: String) => {
 const SliderItem: React.FC<SliderItemProps> = ({ socialUser, fetchSocial }) => {
     const [nfcResponse, setNfcResponse] = useState<any>("")
     const [nfcError, setNfcError] = useState("");
+
     const activateReadNfc = async () => {
         console.log("trying to read Nfc")
+        setNfcResponse("trying to read Nfc");
         try {
-            const read = await scan({ type: "tag" });
-            console.log("activate nfc ", read);
-            setNfcResponse(read);
+            const read = await scan({ type: "tag" }, { message: "Reading", successMessage: "Detected Tag" });
+            console.log("activate nfc ", read.records);
+            setNfcResponse(read.records);
         } catch (error) {
             setNfcError("Error from write");
             console.error("Error writing to NFC tag", error);
@@ -52,17 +54,18 @@ const SliderItem: React.FC<SliderItemProps> = ({ socialUser, fetchSocial }) => {
 
     const activateWritedNfc = async () => {
         console.log("trying to write Nfc")
+        setNfcResponse("trying to write Nfc");
         // const read = await scan({ type: "tag", keepSessionAlive: true });
-        const writeInfo = await write([uriRecord("https://www.tiktok.com/@eazyhomeiot")]);
         try {
-            await write([uriRecord("https://www.tiktok.com/@eazyhomeiot")]);
+            const writeInfo = await write([uriRecord("https://www.tiktok.com/@eazyhomeiot")], { kind: { type: "ndef" }, message: "reading tag", successMessage: "Detected Tag", successfulReadMessage: "Finished write tag", });
             console.log("NFC write successful");
+            console.log("activate nfc ", writeInfo);
+            setNfcResponse(writeInfo);
         } catch (error) {
             setNfcError("Error from write");
             console.error("Error writing to NFC tag", error);
         }
-        console.log("activate nfc ", writeInfo);
-        setNfcResponse(writeInfo);
+
     };
     // let username = getUsernameFromUrl(socialUser.url);
     const [edit, setEdit] = useState(false);
@@ -228,9 +231,6 @@ const SliderItem: React.FC<SliderItemProps> = ({ socialUser, fetchSocial }) => {
                 <div className="card-body pt-16">
 
                     <div className=' flex flex-row justify-between items-center'>
-                        {nfcResponse && (
-                            <div>{JSON.stringify(nfcResponse)}</div>
-                        )}
                         {edit == false ? (
                             <a href={socialUser.url} className="link link-primary">@{username}</a>
                         ) : (
@@ -250,6 +250,11 @@ const SliderItem: React.FC<SliderItemProps> = ({ socialUser, fetchSocial }) => {
                             <div className="skeleton h-4 w-28"></div>
                         </div>
                     )}
+
+                    {nfcResponse && (
+                        <div>{JSON.stringify(nfcResponse)}</div>
+                    )}
+
                     <div className="card-actions justify-end">
                         {edit == true ? (
                             <button onClick={() => fetch(socialUser.type)} className="btn btn-primary">Sync</button>

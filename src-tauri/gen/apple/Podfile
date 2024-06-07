@@ -1,7 +1,8 @@
 # Uncomment the next line to define a global platform for your project
 
 target 'app_iOS' do
-platform :ios, '13.0'
+platform :ios, '15.0'
+use_frameworks! :linkage => :static
   # Pods for app_iOS
 end
 
